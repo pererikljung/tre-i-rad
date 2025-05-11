@@ -31,19 +31,32 @@ function calculateWinner(squares) {
 export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState(Array(8));
+    const [currentClick, setCurrentClick] = useState(0);
 
     function handleClick(i) {
+
+        const currentHistory = history.slice();
+        const nextSquares = squares.slice();
+        
+        if (currentClick >= 8){
+            nextSquares[currentHistory[currentClick % 8]] = null;
+        }
         if (squares[i] || calculateWinner(squares)){
             return;
           }
-        const nextSquares = squares.slice();
+        
         if (xIsNext) {
             nextSquares[i] = "X";
           } else {
             nextSquares[i] = "O";
           }
+        
+        currentHistory[currentClick % 8] = i;
         setXIsNext(!xIsNext);
         setSquares(nextSquares);
+        setCurrentClick(currentClick + 1);
+        setHistory(currentHistory);
       }
 
     const winner = calculateWinner(squares);
@@ -55,9 +68,9 @@ export default function Game() {
     }
 
   return (
-    
-    <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-3 text-center">{status}</div>
+    <>
+    <div className="grid grid-cols-3">
+        <div className="col-span-3 text-center text-[4vw]">{status}</div>
         < Button value={squares[0]} buttonClick={() => handleClick(0)}/>
         < Button value={squares[1]} buttonClick={() => handleClick(1)}/>
         < Button value={squares[2]} buttonClick={() => handleClick(2)}/>
@@ -69,7 +82,9 @@ export default function Game() {
         < Button value={squares[6]} buttonClick={() => handleClick(6)}/>
         < Button value={squares[7]} buttonClick={() => handleClick(7)}/>
         < Button value={squares[8]} buttonClick={() => handleClick(8)}/>
+        <button className="col-span-3 text-[2vw]">Reset</button>
       </div>
+      </>
     
   );
 }
