@@ -39,12 +39,13 @@ export default function Game() {
         const currentHistory = history.slice();
         const nextSquares = squares.slice();
         
-        if (currentClick >= 8){
-            nextSquares[currentHistory[currentClick % 8]] = null;
-        }
         if (squares[i] || calculateWinner(squares)){
             return;
           }
+        
+          if (currentClick >= 8){
+            nextSquares[currentHistory[currentClick % 8]] = null;
+        }
         
         if (xIsNext) {
             nextSquares[i] = "X";
