@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --buttonsize: 10vw;
+  --buttontextsize: 6vw;
 }
 
 @theme inline {
@@ -16,6 +18,13 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  :root {
+    --buttonsize: 14vw;
+    --buttontextsize: 8vw;
   }
 }
 
